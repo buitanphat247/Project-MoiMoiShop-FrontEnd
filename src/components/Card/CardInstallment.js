@@ -12,7 +12,6 @@ const CardInstallment = ({ price, percentage, months }) => {
 
     // Góp mỗi tháng
     const monthlyInstallment = remainingAmount / months;
-    console.log("monthlyInstallment: ", monthlyInstallment);
 
     // Tổng số tiền phải trả sau khi trả góp
     const totalInstallmentAmount = upfrontAmount + monthlyInstallment * months;

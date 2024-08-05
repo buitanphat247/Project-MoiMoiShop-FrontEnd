@@ -120,28 +120,6 @@ const ManagePermissions = () => {
     },
   ];
 
-  const defaultCheckedList = [
-    "stt",
-    "name",
-    "method",
-    "module",
-    "apiPath",
-    "createdAt",
-    "description",
-    "createdBy",
-    "updatedAt",
-    "action",
-  ];
-  const [checkedList, setCheckedList] = useState(defaultCheckedList);
-  const options = columns.map(({ key, title }) => ({
-    label: title,
-    value: key,
-  }));
-  const newColumns = columns.map((item) => ({
-    ...item,
-    hidden: !checkedList.includes(item.key),
-  }));
-
   useEffect(() => {
     const fetchPermission = async () => {
       const url = `${process.env.REACT_APP_HOST_BACKEND}/permissions`;
@@ -208,14 +186,7 @@ const ManagePermissions = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-end">
-        <Checkbox.Group
-          value={checkedList}
-          options={options}
-          onChange={(value) => {
-            setCheckedList(value);
-          }}
-        />
+      <div className="flex justify-end items-end">
         <ButtonTemplate
           onClick={() => {
             handleResestPermissionForm();
@@ -231,7 +202,7 @@ const ManagePermissions = () => {
       <div className="mt-5">
         <Table
           bordered
-          columns={newColumns}
+          columns={columns}
           dataSource={dataPermission}
           onChange={handleTableChange}
         />

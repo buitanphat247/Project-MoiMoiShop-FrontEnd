@@ -37,13 +37,10 @@ const OrderManagage = () => {
     setData({ ...data, isLoading: true });
     const roleUser = currentUser?.role?.name;
     const IdUser = currentUser?._id;
-    console.log("IdUser: ", IdUser);
     const url =
       roleUser === "ADMIN"
         ? `${process.env.REACT_APP_HOST_BACKEND}/orders?current=${currentPage}&limit=${pageSize}&status=/PENDING APPROVAL/i,/PENDING RECEIPT/i&populate=productId`
         : `${process.env.REACT_APP_HOST_BACKEND}/orders?current=${currentPage}&limit=${pageSize}&status=/PENDING APPROVAL/i,/PENDING RECEIPT/i&populate=productId&createdBy._id=${IdUser}`;
-    console.log("url: ", url);
-
     const response = await axios.get(url);
     setData({ orders: response.data.data.result, isLoading: false });
     setPagination({

@@ -76,8 +76,8 @@ const useModelRemove = () => {
             { value: "REJECTED", label: "Hủy Hàng" }, // Assuming 'từ chối' means 'REJECTED'
           ]
         : [
-            { value: "REJECTED", label: "Nhận Hàng" }, // Assuming 'từ chối' means 'REJECTED'
-            { value: "RECEIVED", label: "Hủy Hàng" }, // Assuming 'đang giao' means 'RECEIVED'
+            { value: "RECEIVED", label: "Nhận Hàng" }, // Assuming 'từ chối' means 'REJECTED'
+            { value: "REJECTED", label: "Hủy Hàng" }, // Assuming 'đang giao' means 'RECEIVED'
           ];
 
     // Determine options based on role

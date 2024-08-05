@@ -6,17 +6,11 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { format } from "date-fns"; // Import hàm format từ thư viện date-fns
 import useModelRemove from "../../hooks/useModelRemove";
-import CountUp from "react-countup";
-import {
-  CheckCircleOutlined,
-  DeleteOutlined,
-  EditOutlined,
-  EyeOutlined,
-} from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import FormProduct from "../../components/Form/FormProduct";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { setImage, setNewListImage } from "../../slices/fileSlice";
+import { setNewListImage } from "../../slices/fileSlice";
 import { setContentEditor } from "../../slices/editorSlice";
 import { useNavigate } from "react-router-dom";
 import { formatPrice } from "../../pages/Detail";
@@ -25,7 +19,6 @@ const ManageProducts = () => {
   const {
     dataEdit,
     handleOpenEdit,
-    handleCloseEdit,
     isOpenEdit,
     isOpenCreate,
     handleOpenCreate,
@@ -60,7 +53,7 @@ const ManageProducts = () => {
         axios.get(url_products),
       ]);
       setData({
-        categories: response_categories.data.data,
+        categories: response_categories.data.data.result,
         products: response_products.data.data.result,
         meta: response_products.data.data.meta,
         isLoading: false,
@@ -156,7 +149,8 @@ const ManageProducts = () => {
       title: "ID",
       key: "_id",
       render: (item) => {
-        const idDisplay = `${item._id.slice(15, 30)}...`;
+        const idDisplay =
+          item._id.length > 5 ? `${item._id.slice(15, 30)}...` : item._id;
         return <span>{idDisplay}</span>;
       },
     },

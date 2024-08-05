@@ -163,28 +163,29 @@ const CardFAQ = () => {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-center mb-5 underline">
+      <h1 className="text-xl font-bold text-center mb-5 underline uppercase">
         Câu hỏi thường gặp
       </h1>
       <div className="grid grid-cols-3 gap-x-5">
         {Object.keys(faqs).map((category, index) => (
-          <div key={index} className="p-3 border-2 border-[#0f1654] shadow-xl rounded-md">
-            <h2 className="text-2xl font-semibold mb-4">
+          <div
+            key={index}
+            className="p-3 border-2 border-[#0f1654] shadow-xl rounded-md"
+          >
+            <h2 className="text-lg font-semibold mb-4">
               {index + 1}. {" " + category}
             </h2>
             <ul className="space-y-3 list-disc list-inside">
               {faqs[category].map((faq, index) => (
                 <li
-                  className="hover:underline text-lg cursor-pointer"
+                  className="hover:underline cursor-pointer"
                   key={index}
                   onClick={() => {
                     Modal.info({
                       width: "30%",
-                      title: <span className="text-lg">{faq.question}</span>,
+                      title: <span>{faq.question}</span>,
                       content: (
-                        <p className="text-justify text-lg space-y-3 ">
-                          {faq.answer}
-                        </p>
+                        <p className="text-justify space-y-3 ">{faq.answer}</p>
                       ),
                       onOk() {},
                     });

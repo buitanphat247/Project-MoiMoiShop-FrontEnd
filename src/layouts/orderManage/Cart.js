@@ -98,7 +98,6 @@ const Cart = () => {
             setValue={setValue}
           />
         ) : (
-          // <span>{<CountUp start={0} end={item.quanlity} />}</span>
           <span>{item.quanlity}</span>
         );
       },
@@ -108,12 +107,6 @@ const Cart = () => {
       render: (item) => (
         <Space>
           <span>
-            {/* <CountUp
-              start={0}
-              end={
-                parseInt(item.productId.price, 10) * parseInt(item.quanlity, 10)
-              }
-            /> */}
             {formatPrice(
               parseInt(item.productId.price, 10) * parseInt(item.quanlity, 10)
             )}
@@ -179,13 +172,12 @@ const Cart = () => {
               <Button
                 type="link"
                 onClick={() => {
-                  console.log("editingProductId: ", editingProductId);
-                  console.log("item: ", item);
                   setEditingProductId(item._id); // Mở chế độ chỉnh sửa cho sản phẩm hiện tại
                 }}
                 icon={<EditOutlined style={{ color: "orange" }} />}
               />
             )}
+            {/* remove order form cart */}
             <Button
               type="link"
               onClick={async () => {

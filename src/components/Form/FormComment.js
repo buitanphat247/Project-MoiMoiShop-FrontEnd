@@ -22,7 +22,7 @@ const FormComment = () => {
           value={formData.message}
           onChange={handleChange}
           rows="4"
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border rounded max-h-[250px] min-h-[250px]"
         ></textarea>
       </div>
       <div className="flex gap-x-5 mt-3">

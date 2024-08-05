@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { Nav, NavbarToggle } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useNavigation } from "react-router-dom";
 import styled from "styled-components";
 import { Dropdown } from "flowbite-react";
-import { userLogoutFetch } from "../slices/authSlice";
+import { userLoginFetch, userLogoutFetch } from "../slices/authSlice";
 import { toast } from "react-toastify";
-import { Modal } from "antd";
+import { Modal, Space } from "antd";
+import FormSignIn from "../components/Form/FormSignIn";
+import { useForm } from "react-hook-form";
+import CardProfile from "../components/Card/CardProfile";
+import { setQuery, setQueryChange } from "../slices/querySlice";
 
 const list_menu = {
   contain_left: [
@@ -75,13 +79,20 @@ const StyledDiv = styled.div`
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated, currentUser } = useSelector((state) => state.auth);
   const [modal, contextHolder] = Modal.useModal();
+  const { register, getValues, setValue } = useForm();
+  const { queryChange } = useSelector((state) => state.query);
   const handleClick = () => {
     console.log("check click");
   };
-  const handleAccount = () => {
-    navigate("/admin");
+  const handleAccount = async () => {
+    await modal.info({
+      title: "Profile",
+      width: "30%",
+      content: <CardProfile user={currentUser}></CardProfile>,
+      okText: "Submit",
+    });
   };
   const handleLogout = async () => {
     await modal.confirm({
@@ -99,14 +110,35 @@ const Header = () => {
         }
       },
     });
-
-    // const response = await dispatch(userLogoutFetch());
-    // const status_login = response.payload.status;
-    // if (status_login === 201) {
-    //   toast.success("Logout success");
-    //   navigate("/");
-    // }
   };
+  const handleLogin = async () => {
+    console.log(true);
+    await modal.confirm({
+      title: "Sign In",
+      content: <FormSignIn register={register}></FormSignIn>,
+      okText: "Submit",
+      width: "30%",
+      onOk: async () => {
+        const userInfo = {
+          username: getValues("email").trim(),
+          password: getValues("password").trim(),
+        };
+        const response = await dispatch(userLoginFetch(userInfo));
+        const status_login = response.payload.status;
+        if (status_login === 201) {
+          toast.success("Login success");
+          navigate("/");
+          setValue("email", "");
+          setValue("password", "");
+        } else {
+          toast.error("Login Error");
+          setValue("email", "");
+          setValue("password", "");
+        }
+      },
+    });
+  };
+
   return (
     <>
       <div className="w-[70%] mx-auto pt-2 pb-5">
@@ -135,17 +167,25 @@ const Header = () => {
               </li>
             ))}
 
+            {/* status non login */}
             {(isAuthenticated === false || isAuthenticated === null) &&
-              list_menu.contain_right.slice(1, 3).map((item, index) => (
-                <li key={item.index}>
-                  <NavLink to={item.href}>
-                    {item.name}
-                    {` `}
-                    {item?.icon}
-                  </NavLink>
-                </li>
-              ))}
+              list_menu.contain_right.slice(1, 3).map((item, index) => {
+                return (
+                  <li
+                    key={item.index}
+                    onClick={item.href === "/login" && handleLogin}
+                  >
+                    <NavLink>
+                      <Space>
+                        <span>{item.name}</span>
+                        <span>{item?.icon}</span>
+                      </Space>
+                    </NavLink>
+                  </li>
+                );
+              })}
 
+            {/* status login success */}
             {isAuthenticated === true &&
               list_menu.contain_right.slice(3, 5).map((item, index) => (
                 <li
@@ -156,9 +196,10 @@ const Header = () => {
                   }
                 >
                   <NavLink>
-                    {item.name}
-                    {` `}
-                    {item?.icon}
+                    <Space>
+                      <span>{item.name}</span>
+                      <span>{item?.icon}</span>
+                    </Space>
                   </NavLink>
                 </li>
               ))}
@@ -171,11 +212,23 @@ const Header = () => {
 
           <li className="flex-1  w-full h-full relative">
             <input
+              autoComplete="off"
+              {...register("query")}
+              value={queryChange}
+              onChange={(e) => {
+                dispatch(setQueryChange(e.target.value));
+              }}
               type="text"
-              className="rounded-md px-3 w-full h-full text-black"
+              className="rounded-md px-3 w-full h-full text-black focus:outline-none focus:ring-2 focus:ring-[#0f1654] transition-all"
               placeholder="Tìm kiếm sản phẩm..."
             />
-            <div className="absolute right-0 top-0 bg-white w-[100px] h-full border-4 border-white rounded-md">
+            <div
+              onClick={() => {
+                dispatch(setQuery(getValues("query")));
+                navigate("/product");
+              }}
+              className="cursor-pointer absolute right-0 top-0 bg-white w-[100px] h-full border-4 border-white rounded-md"
+            >
               <i className="fa-solid fa-magnifying-glass bg-[#fb5531] w-full h-full flex items-center justify-center rounded-md"></i>
             </div>
           </li>

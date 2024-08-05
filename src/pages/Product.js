@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Select, Space, Spin, Pagination as AntdPagination } from "antd";
+import { Select, Spin, Pagination as AntdPagination } from "antd";
 import { Button } from "antd";
 import CardProduct from "../components/Card/CardProduct";
 import axios from "axios";
 import { Controller, useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { resetQuery } from "../slices/querySlice";
 
 const Product = () => {
   const [data, setData] = useState({
@@ -12,14 +14,15 @@ const Product = () => {
     Categories: [],
     isLoading: true,
   });
+  const { query } = useSelector((state) => state.query);
   const [filter, setFilter] = useState({
     sort: "",
     categoryPath: "",
   });
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
-  const { register, control, setValue } = useForm();
-
+  const { control, setValue } = useForm();
+  const dispatch = useDispatch();
   useEffect(() => {
     const fetchData = async () => {
       setData({
@@ -33,7 +36,7 @@ const Product = () => {
         },
         withCredentials: true,
       };
-      const urlProduct = `${process.env.REACT_APP_HOST_BACKEND}/products?current=${currentPage}&limit=${itemsPerPage}&sort=${filter.sort}&categories=${filter.categoryPath}`;
+      const urlProduct = `${process.env.REACT_APP_HOST_BACKEND}/products?current=${currentPage}&limit=${itemsPerPage}&sort=${filter.sort}&categories=${filter.categoryPath}&name=/${query}/i`;
       const urlCategory = `${process.env.REACT_APP_HOST_BACKEND}/categories`;
       const responseProduct = await axios.get(urlProduct, config);
       const responseCategory = await axios.get(urlCategory, config);
@@ -45,7 +48,7 @@ const Product = () => {
       });
     };
     fetchData();
-  }, [currentPage, filter]); // Fetch dữ liệu mỗi khi currentPage thay đổi
+  }, [currentPage, filter, query]); // Fetch dữ liệu mỗi khi currentPage thay đổi
   const optionsCategories = [{ value: "", label: "Sản Phẩm" }].concat(
     data.Categories.map((item) => ({
       value: item._id,
@@ -58,63 +61,70 @@ const Product = () => {
       <div className="flex items-center justify-between bg-[#e5e5e5] p-3 rounded-md mt-5">
         <div className="flex items-center gap-x-3">
           <span className="text-gr  ay-700">Sắp xếp theo:</span>
-
-          <Controller
-            name={"filter"}
-            control={control}
-            render={({ field }) => (
-              <Select
-                disabled={data.isLoading}
-                {...field}
-                defaultValue={filter.sort}
-                className="min-w-[200px]"
-                onChange={(value) => {
-                  setValue("filter", value);
-                  setFilter({ ...filter, sort: value });
-                }}
-                options={[
-                  { value: "", label: "Bộ Lọc" },
-                  { value: "-createdAt", label: "Mới Nhất" },
-                  { value: "+price", label: "Giá: Thấp đến cao" },
-                  { value: "-price", label: "Giá: Cao đến thấp" },
-                ]}
-              />
-            )}
-          />
-
-          <Controller
-            name={"categoryPath"}
-            control={control}
-            render={({ field }) => (
-              <Select
-                {...field}
-                disabled={data.isLoading}
-                defaultValue={filter.categoryPath}
-                onChange={(value) => {
-                  setValue("categoryPath", value);
-                  setFilter({ ...filter, categoryPath: value });
-                }}
-                className="min-w-[200px]"
-                options={optionsCategories}
-              />
-            )}
-          />
-          <Button
-            disabled={
-              data.isLoading ||
-              (filter.sort === "" && filter.categoryPath === "")
-            }
-            onClick={() => {
-              setValue("categoryPath", "");
-              setValue("filter", "");
-              setFilter({ sort: "", categoryPath: "" });
-            }}
-          >
-            <i className="fa-regular fa-trash-can"></i>
-          </Button>
+          <>
+            <Controller
+              name={"filter"}
+              control={control}
+              render={({ field }) => (
+                <Select
+                  disabled={data.isLoading}
+                  {...field}
+                  defaultValue={filter.sort}
+                  className="min-w-[200px]"
+                  onChange={(value) => {
+                    setValue("filter", value);
+                    setFilter({ ...filter, sort: value });
+                  }}
+                  options={[
+                    { value: "", label: "Bộ Lọc" },
+                    { value: "-createdAt", label: "Mới Nhất" },
+                    { value: "+price", label: "Giá: Thấp đến cao" },
+                    { value: "-price", label: "Giá: Cao đến thấp" },
+                  ]}
+                />
+              )}
+            />
+            <Controller
+              name={"categoryPath"}
+              control={control}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  disabled={data.isLoading}
+                  defaultValue={filter.categoryPath}
+                  onChange={(value) => {
+                    setValue("categoryPath", value);
+                    setFilter({ ...filter, categoryPath: value });
+                  }}
+                  className="min-w-[200px]"
+                  options={optionsCategories}
+                />
+              )}
+            />
+            <Button
+              disabled={
+                data.isLoading ||
+                (filter.sort === "" &&
+                  filter.categoryPath === "" &&
+                  query === "")
+              }
+              onClick={() => {
+                setValue("categoryPath", "");
+                setValue("filter", "");
+                setFilter({ sort: "", categoryPath: "" });
+                dispatch(
+                  resetQuery({
+                    query: "",
+                    queryChange: "",
+                  })
+                );
+              }}
+            >
+              <i className="fa-regular fa-trash-can"></i>
+            </Button>
+          </>
         </div>
       </div>
-
       <div className="grid grid-cols-5 gap-x-3 gap-y-5 mt-5">
         {!data.isLoading ? (
           data?.Product?.map((item) => (
@@ -124,15 +134,15 @@ const Product = () => {
               id={item._id}
               key={item._id}
               price={item.price}
+              discount={item.discount}
             />
           ))
         ) : (
-          <div className="col-span-5 flex items-center justify-center h-[50vh]">
+          <div className="col-span-5 flex items-center justify-center h-[30vh]">
             <Spin tip="Loading" size="large" />
           </div>
         )}
       </div>
-
       {!data.isLoading && (
         <div className="flex items-center justify-center mt-5">
           <AntdPagination

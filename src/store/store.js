@@ -4,6 +4,7 @@ import modelReducer from "../slices/modelSlice";
 import roleReducer from "../slices/roleSlice";
 import fileReducer from "../slices/fileSlice";
 import editorReducer from "../slices/editorSlice";
+import queryReducer from "../slices/querySlice";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 
@@ -19,6 +20,7 @@ const reducer = combineReducers({
   role: roleReducer,
   file: fileReducer,
   editor: editorReducer,
+  query: queryReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

@@ -36,7 +36,7 @@ const FormUser = ({ title, type_field, register }) => {
       <FieldSelect
         name={"gender"}
         register={register}
-        data={["male", "female"]}
+        data={["Male", "Female"]}
       ></FieldSelect>
     </form>
   );

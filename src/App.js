@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import SignIn from "./pages/SignIn";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DashBoard from "./layouts/DashBoard";
@@ -11,9 +10,8 @@ import NotFound from "./pages/NotFound";
 import Detail from "./pages/Detail";
 import Product from "./pages/Product";
 import DashboardAdmin from "./pages/DashboardAdmin";
-import { FloatButton, message } from "antd";
+import { FloatButton } from "antd";
 import Order from "./pages/Order";
-import { animateScroll as scroll } from "react-scroll";
 import About from "./pages/About";
 const App = () => {
   const dispatch = useDispatch();
@@ -47,9 +45,6 @@ const App = () => {
               )}
             </Route>
             <Route path="*" element={<NotFound />} />
-            {isAuthenticated === false && (
-              <Route path="/login" element={<SignIn />} />
-            )}
           </Routes>
         </BrowserRouter>
         <FloatButton.BackTop />

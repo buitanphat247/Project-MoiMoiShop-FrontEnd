@@ -13,6 +13,11 @@ const Order = () => {
       ? [
           {
             key: "1",
+            label: "Giỏ hàng",
+            children: <Cart></Cart>,
+          },
+          {
+            key: "2",
             label: "Quản lí gian hàng",
             children: <OrderManagage></OrderManagage>,
           },

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Header from "../layouts/Header";
 import Banner from "../layouts/Banner";
 import CardListProduct from "../components/Card/CardListProduct";
 import axios from "axios";
+import { scrollToTop } from "../config/ScrollToTop";
 
 const Home = () => {
   const [data, setData] = useState({
@@ -41,7 +41,6 @@ const Home = () => {
         ProductLatest: response_product_latest.data.data.result,
         ProductPhone: response_product_phone.data.data.result,
         ProductLaptop: response_product_laptop.data.data.result,
-
         isLoading: false,
       });
     };
@@ -76,126 +75,3 @@ const Home = () => {
 };
 
 export default Home;
-
-export const list_phones_of_company = [
-  {
-    name: "Apple",
-    country: "USA",
-  },
-  {
-    name: "Samsung",
-    country: "South Korea",
-  },
-  {
-    name: "Huawei",
-    country: "China",
-  },
-  {
-    name: "Xiaomi",
-    country: "China",
-  },
-  {
-    name: "OnePlus",
-    country: "China",
-  },
-  {
-    name: "Google",
-    country: "USA",
-  },
-  {
-    name: "Sony",
-    country: "Japan",
-  },
-  {
-    name: "LG",
-    country: "South Korea",
-  },
-  {
-    name: "Motorola",
-    country: "USA",
-  },
-  {
-    name: "Nokia",
-    country: "Finland",
-  },
-  {
-    name: "HTC",
-    country: "Taiwan",
-  },
-  {
-    name: "BlackBerry",
-    country: "Canada",
-  },
-  {
-    name: "Lenovo",
-    country: "China",
-  },
-  {
-    name: "Asus",
-    country: "Taiwan",
-  },
-  {
-    name: "ZTE",
-    country: "China",
-  },
-  {
-    name: "Meizu",
-    country: "China",
-  },
-  {
-    name: "Oppo",
-    country: "China",
-  },
-  {
-    name: "Vivo",
-    country: "China",
-  },
-  {
-    name: "Sharp",
-    country: "Japan",
-  },
-  {
-    name: "Panasonic",
-    country: "Japan",
-  },
-  {
-    name: "TCL",
-    country: "China",
-  },
-  {
-    name: "Realme",
-    country: "China",
-  },
-  {
-    name: "Honor",
-    country: "China",
-  },
-  {
-    name: "Black Shark",
-    country: "China",
-  },
-  {
-    name: "Redmi",
-    country: "China",
-  },
-  {
-    name: "POCO",
-    country: "China",
-  },
-  {
-    name: "Infinix",
-    country: "Hong Kong",
-  },
-  {
-    name: "Tecno Mobile",
-    country: "China",
-  },
-  {
-    name: "Coolpad",
-    country: "China",
-  },
-  {
-    name: "Micromax",
-    country: "India",
-  },
-];

@@ -11,6 +11,7 @@ const initialState = {
 export const userLoginFetch = createAsyncThunk(
   "auth/userPostFetch",
   async (userInfo, thunkAPI) => {
+    console.log("userInfo: ", userInfo);
     try {
       const url = `${process.env.REACT_APP_HOST_BACKEND}/auths/login`;
       const response = await axios.post(url, userInfo, {

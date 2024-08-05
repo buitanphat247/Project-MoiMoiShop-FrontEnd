@@ -33,7 +33,7 @@ const About = () => {
           <div className="flex flex-wrap -mx-4">
             <div className="w-full md:w-1/2 px-4 mb-6 md:mb-0">
               <img
-                src="https://via.placeholder.com/500"
+                src="https://res.cloudinary.com/upwork-cloud/image/upload/c_scale,w_1000/v1693914240/catalog/1699011697766518784/gbflfa6xiwyujxwvaxyl.jpg"
                 alt="Design Team"
                 className="rounded shadow"
               />
