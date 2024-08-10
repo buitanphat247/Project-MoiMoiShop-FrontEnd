@@ -1,14 +1,12 @@
 import { Modal } from "antd";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { toast } from "react-toastify";
 import ModelInstallment from "../../components/ModelInstallment";
 import QuantitySelector from "../../components/button/QuantitySelector";
 import FormOrder from "../../components/Form/FormOrder";
 import CardAdvise from "../../components/Card/CardAdvise";
 import { useSelector } from "react-redux";
+import api from "../../config/api";
 
 const DetailAction = ({ data, id }) => {
   const [modal, contextHolder] = Modal.useModal();
@@ -71,11 +69,10 @@ const DetailAction = ({ data, id }) => {
           },
         };
 
-        const url = `${process.env.REACT_APP_HOST_BACKEND}/orders`;
+        const url = `/orders`;
 
         try {
-          // Make the POST request with axios
-          await axios.post(url, DataOrderForm, config);
+          await api.post(url, DataOrderForm);
           toast.success(message_success);
         } catch (error) {
           console.log("error: ", error);

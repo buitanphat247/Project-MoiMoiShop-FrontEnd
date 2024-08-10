@@ -14,6 +14,7 @@ import { setNewListImage } from "../../slices/fileSlice";
 import { setContentEditor } from "../../slices/editorSlice";
 import { useNavigate } from "react-router-dom";
 import { formatPrice } from "../../pages/Detail";
+import api from "../../config/api";
 
 const ManageProducts = () => {
   const {
@@ -45,12 +46,12 @@ const ManageProducts = () => {
 
   const fetchData = async (currentPage = 1, pageSize = 10) => {
     setData((prevData) => ({ ...prevData, isLoading: true }));
-    const url_categories = `${process.env.REACT_APP_HOST_BACKEND}/categories`;
-    const url_products = `${process.env.REACT_APP_HOST_BACKEND}/products?current=${currentPage}&limit=${pageSize}`;
+    const url_categories = `/categories`;
+    const url_products = `/products?current=${currentPage}&limit=${pageSize}`;
     try {
       const [response_categories, response_products] = await Promise.all([
-        axios.get(url_categories),
-        axios.get(url_products),
+        api.get(url_categories),
+        api.get(url_products),
       ]);
       setData({
         categories: response_categories.data.data.result,
@@ -82,7 +83,7 @@ const ManageProducts = () => {
     dispatch(setContentEditor(""));
     reset({
       name: "",
-      quanlity: "",
+      quantity: "",
       price: "",
       discount: "",
       category: "",
@@ -94,17 +95,12 @@ const ManageProducts = () => {
     message_success,
     message_error,
   }) => {
-    const arr_categories = [];
-    getValues("category").forEach((item) => {
-      arr_categories.push(item.value);
-    });
-
     const dataProduct = {
       name: getValues("name"),
-      quanlity: getValues("quanlity"),
+      quantity: getValues("quantity"),
       price: getValues("price"),
       discount: getValues("discount"),
-      categories: arr_categories,
+      category: getValues("category").value,
       description: content_editor,
       images: image,
     };
@@ -225,14 +221,14 @@ const ManageProducts = () => {
               Object.keys(item).forEach((key) => {
                 setValue(key, item[key]);
               });
-              const arr_categories = data.categories
-                .map((category) =>
-                  item.categories.includes(category._id)
-                    ? { label: category.name, value: category._id }
-                    : null
-                )
-                .filter(Boolean);
-              setValue("category", arr_categories);
+              data.categories.map((category_item, index) => {
+                if (category_item._id === item.category) {
+                  setValue("category", {
+                    label: category_item.name,
+                    value: category_item._id,
+                  });
+                }
+              });
               dispatch(setNewListImage(item.images));
               dispatch(setContentEditor(item.description));
               handleOpenEdit(item);

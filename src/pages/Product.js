@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Select, Spin, Pagination as AntdPagination } from "antd";
 import { Button } from "antd";
 import CardProduct from "../components/Card/CardProduct";
-import axios from "axios";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { resetQuery } from "../slices/querySlice";
+import api from "../config/api";
 
 const Product = () => {
   const [data, setData] = useState({
@@ -36,10 +36,11 @@ const Product = () => {
         },
         withCredentials: true,
       };
-      const urlProduct = `${process.env.REACT_APP_HOST_BACKEND}/products?current=${currentPage}&limit=${itemsPerPage}&sort=${filter.sort}&categories=${filter.categoryPath}&name=/${query}/i`;
-      const urlCategory = `${process.env.REACT_APP_HOST_BACKEND}/categories`;
-      const responseProduct = await axios.get(urlProduct, config);
-      const responseCategory = await axios.get(urlCategory, config);
+      const urlProduct = `/products?current=${currentPage}&limit=${itemsPerPage}&sort=${filter.sort}&category=${filter.categoryPath}&name=/${query}/i`;
+      const urlCategory = `/categories`;
+      const responseProduct = await api.get(urlProduct);
+      console.log("responseProduct: ", responseProduct);
+      const responseCategory = await api.get(urlCategory);
       setData({
         Product: responseProduct.data.data.result,
         Meta: responseProduct.data.data.meta,

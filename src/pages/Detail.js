@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
-import { Flex, notification, Rate, Space, Spin, Tabs } from "antd";
+import { Flex, Rate, Space, Spin } from "antd";
 import CardListProduct from "../components/Card/CardListProduct";
 import { useParams } from "react-router-dom";
-import axios from "axios";
-import { useForm } from "react-hook-form";
 import DetailPicture from "../layouts/detail/DetailPicture";
 import DetailCategory from "../layouts/detail/DetailCategory";
-import DetailBox from "../layouts/detail/DetailBox";
 import DetailAction from "../layouts/detail/DetailAction";
 import DetailTabs from "../layouts/detail/DetailTabs";
+import api from "../config/api";
 
 const { parseDOM } = require("htmlparser2");
 
@@ -36,14 +34,15 @@ const Detail = () => {
       };
 
       const urls = [
-        `${process.env.REACT_APP_HOST_BACKEND}/products/${id}`,
-        `${process.env.REACT_APP_HOST_BACKEND}/products?current=1&limit=10&categories=669c2e99961853fec8c7b3dd`,
-        `${process.env.REACT_APP_HOST_BACKEND}/products?current=1&limit=10&categories=669c2ea9961853fec8c7b3df`,
+        `/products/${id}`,
+        `/products?current=1&limit=10&category=669c2e99961853fec8c7b3dd`,
+        `/products?current=1&limit=10&category=669c2ea9961853fec8c7b3df`,
       ];
 
       try {
         const [responseDetail, responsePhone, responseLaptop] =
-          await Promise.all(urls.map((url) => axios.get(url, config)));
+          await Promise.all(urls.map((url) => api.get(url)));
+        console.log("responseDetail.data.data: ", responseDetail.data.data);
 
         setData({
           Detail: responseDetail.data.data,

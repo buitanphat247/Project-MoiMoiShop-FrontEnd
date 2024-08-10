@@ -1,24 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Button, Space, Spin, Table, Tag } from "antd";
-import QuantitySelector from "../../components/button/QuantitySelector";
+import { Space, Spin, Table, Tag } from "antd";
 import {
-  CheckOutlined,
-  EditOutlined,
-  DeleteOutlined,
-  EyeOutlined,
-  CreditCardOutlined,
-  ClockCircleOutlined,
-  MenuOutlined,
   CheckCircleOutlined,
 } from "@ant-design/icons";
-import axios from "axios";
-import { useForm } from "react-hook-form";
-import CountUp from "react-countup";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import useModelRemove from "../../hooks/useModelRemove";
 import { formatPrice } from "../../pages/Detail";
 import { useSelector } from "react-redux";
+import api from "../../config/api";
 
 const OrderHistory = () => {
   const [data, setData] = useState({
@@ -37,9 +24,9 @@ const OrderHistory = () => {
     const IdUser = currentUser?._id;
     const url =
       roleUser === "ADMIN"
-        ? `${process.env.REACT_APP_HOST_BACKEND}/orders?current=${currentPage}&limit=${pageSize}&status=/RECEIVED/i&populate=productId`
-        : `${process.env.REACT_APP_HOST_BACKEND}/orders?current=${currentPage}&limit=${pageSize}&status=/RECEIVED/i&populate=productId&createdBy._id=${IdUser}`;
-    const response = await axios.get(url);
+        ? `/orders?current=${currentPage}&limit=${pageSize}&status=/RECEIVED/i&populate=productId`
+        : `/orders?current=${currentPage}&limit=${pageSize}&status=/RECEIVED/i&populate=productId&createdBy._id=${IdUser}`;
+    const response = await api.get(url);
     setData({ orders: response.data.data.result, isLoading: false });
     setPagination({
       current: response.data.data.meta.current,

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Button, Modal, Space, Spin, Table } from "antd";
 import ButtonTemplate from "../../components/ButtonTemplate";
 import useModelControl from "../../hooks/useModelControl";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { format } from "date-fns"; // Import hàm format từ thư viện date-fns
 import slugify from "slugify"; // Import slugify từ thư viện slugify
@@ -10,6 +9,7 @@ import useModelRemove from "../../hooks/useModelRemove";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import FormCategory from "../../components/Form/FormCategory";
 import { useForm } from "react-hook-form";
+import api from "../../config/api";
 
 const ManageCategories = () => {
   const {
@@ -36,8 +36,8 @@ const ManageCategories = () => {
       ...data,
       isLoading: true,
     });
-    const url = `${process.env.REACT_APP_HOST_BACKEND}/categories?current=${page}&limit=${pageSize}`;
-    const response = await axios.get(url);
+    const url = `/categories?current=${page}&limit=${pageSize}`;
+    const response = await api.get(url);
 
     setData({
       categories: response.data.data.result,
@@ -150,9 +150,7 @@ const ManageCategories = () => {
     };
 
     const url =
-      method === "create"
-        ? `${process.env.REACT_APP_HOST_BACKEND}/categories`
-        : `${process.env.REACT_APP_HOST_BACKEND}/categories/${dataEdit._id}`;
+      method === "create" ? `/categories` : `/categories/${dataEdit._id}`;
     const access_token = localStorage.getItem("access_token");
     const config = {
       withCredentials: true,
@@ -163,8 +161,8 @@ const ManageCategories = () => {
     try {
       const response =
         method === "create"
-          ? await axios.post(url, Category, config)
-          : await axios.put(url, Category, config);
+          ? await api.post(url, Category)
+          : await api.put(url, Category);
 
       toast.success(message_success);
       fetchData(pagination.current, pagination.pageSize); // Refresh data after update

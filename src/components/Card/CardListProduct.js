@@ -12,7 +12,6 @@ const CardListProduct = ({ title_menu_product, data, isLoading }) => {
       <div className="grid grid-cols-5 gap-x-3 gap-y-5 mt-1">
         {!isLoading ? (
           data?.slice(0, 10).map((item, index) => {
-            console.log("item: ", item);
             return (
               <CardProduct
                 image={item.images}
@@ -33,7 +32,7 @@ const CardListProduct = ({ title_menu_product, data, isLoading }) => {
       {!isLoading && (
         <NavLink
           to="/product"
-          className="w-[25%] border-2 border-[rgba(15,22,84,1)] font-semibold rounded-md h-[50px] capitalize mt-5 mx-auto  bg-white flex items-center justify-center"
+          className="shadow-lg hover:shadow-red-400 transition-shadow  w-[25%] border-2 border-gray-400 hover:border-[rgba(15,22,84,1)] font-semibold rounded-md h-[50px] capitalize mt-5 mx-auto  bg-white flex items-center justify-center"
         >
           Xem tất cả sản phẩm
         </NavLink>

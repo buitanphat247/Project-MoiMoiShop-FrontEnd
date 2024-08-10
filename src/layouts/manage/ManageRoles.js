@@ -14,6 +14,7 @@ import {
 } from "@ant-design/icons";
 import FormRole from "../../components/Form/FormRole";
 import { useForm } from "react-hook-form";
+import api from "../../config/api";
 
 const ManageRoles = () => {
   const {
@@ -36,22 +37,12 @@ const ManageRoles = () => {
   const fetchPermissionRole = async (currentPage = 1, pageSize = 10) => {
     setData((prevData) => ({ ...prevData, isLoading: true }));
     try {
-      const urlRoles = `${process.env.REACT_APP_HOST_BACKEND}/roles?current=${currentPage}&limit=${pageSize}`;
-      const urlPermission = `${process.env.REACT_APP_HOST_BACKEND}/permissions`;
+      const urlRoles = `/roles?current=${currentPage}&limit=${pageSize}`;
+      const urlPermission = `/permissions`;
       const access_token = localStorage.getItem("access_token");
       const [responseRole, responsePermission] = await Promise.all([
-        axios.get(urlRoles, {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-          },
-        }),
-        axios.get(urlPermission, {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-          },
-        }),
+        api.get(urlRoles),
+        api.get(urlPermission),
       ]);
 
       setData({

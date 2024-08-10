@@ -22,7 +22,7 @@ const DetailCategory = ({ data }) => {
           </li>
           <li className="border-t-2 border-dotted  py-2">
             <span>Từ khóa: </span>
-            <span>{data?.categories.name}</span>
+            <span>{data?.category.name}</span>
           </li>
           {/* <li className="border-t-2 border-dotted  py-2">
             <span>Số lượng: </span>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Space, Switch, Typography } from "antd";
+import { Switch, Typography } from "antd";
 import { Controller } from "react-hook-form";
 const { Text, Paragraph } = Typography;
 

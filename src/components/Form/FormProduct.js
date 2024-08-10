@@ -50,9 +50,7 @@ const FormProduct = ({ title, data, categories, register, control }) => {
             <Controller
               control={control}
               name="category"
-              render={({ field }) => (
-                <Select {...field} isMulti options={options} />
-              )}
+              render={({ field }) => <Select {...field} options={options} />}
             />
           </div>
         </div>

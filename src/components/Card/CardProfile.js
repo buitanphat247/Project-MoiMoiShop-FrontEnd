@@ -1,6 +1,6 @@
 // CardProfile.js
 import React from "react";
-import { Table, Avatar, Card, Flex } from "antd";
+import { Table, Avatar, Flex } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
 const CardProfile = ({ user }) => {
@@ -34,7 +34,7 @@ const CardProfile = ({ user }) => {
 
   return (
     <div>
-      <Flex align="center" justify="center">
+      <Flex align="center" justify="center" className="mb-3">
         <Avatar size={120} icon={<UserOutlined />} />
       </Flex>
       <Table

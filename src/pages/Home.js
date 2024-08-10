@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Banner from "../layouts/Banner";
 import CardListProduct from "../components/Card/CardListProduct";
-import axios from "axios";
 import { scrollToTop } from "../config/ScrollToTop";
+import api from "../config/api";
 
 const Home = () => {
   const [data, setData] = useState({
@@ -24,19 +24,13 @@ const Home = () => {
         },
         withCredentials: true,
       };
-      const url_product_latest = `${process.env.REACT_APP_HOST_BACKEND}/products?current=1&limit=10&sort=-createdAt`;
-      const url_product_phone = `${process.env.REACT_APP_HOST_BACKEND}/products?current=1&limit=10&categories=669c2e99961853fec8c7b3dd`;
-      const url_product_laptop = `${process.env.REACT_APP_HOST_BACKEND}/products?current=1&limit=10&categories=669c2ea9961853fec8c7b3df`;
+      const url_product_latest = `/products?current=1&limit=10&sort=-createdAt`;
+      const url_product_phone = `/products?current=1&limit=10&category=669c2e99961853fec8c7b3dd`;
+      const url_product_laptop = `/products?current=1&limit=10&category=669c2ea9961853fec8c7b3df`;
       // handle response
-      const response_product_latest = await axios.get(
-        url_product_latest,
-        config
-      );
-      const response_product_phone = await axios.get(url_product_phone, config);
-      const response_product_laptop = await axios.get(
-        url_product_laptop,
-        config
-      );
+      const response_product_latest = await api.get(url_product_latest);
+      const response_product_phone = await api.get(url_product_phone);
+      const response_product_laptop = await api.get(url_product_laptop);
       setData({
         ProductLatest: response_product_latest.data.data.result,
         ProductPhone: response_product_phone.data.data.result,

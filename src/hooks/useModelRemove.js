@@ -4,6 +4,7 @@ import axios from "axios";
 import React from "react";
 import { Controller } from "react-hook-form";
 import { toast } from "react-toastify";
+import api from "../config/api";
 
 const useModelRemove = () => {
   const [modal, contextHolder] = Modal.useModal();
@@ -106,7 +107,7 @@ const useModelRemove = () => {
         const { value } = getValues("updateStatus");
         const access_token = localStorage.getItem("access_token");
         try {
-          const response = await axios.put(
+          const response = await api.put(
             url,
             { status: value },
             {

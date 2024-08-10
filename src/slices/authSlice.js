@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../config/api";
 
 const initialState = {
   currentUser: {},
@@ -11,12 +11,9 @@ const initialState = {
 export const userLoginFetch = createAsyncThunk(
   "auth/userPostFetch",
   async (userInfo, thunkAPI) => {
-    console.log("userInfo: ", userInfo);
     try {
-      const url = `${process.env.REACT_APP_HOST_BACKEND}/auths/login`;
-      const response = await axios.post(url, userInfo, {
-        withCredentials: true,
-      });
+      const url = `/auths/login`;
+      const response = await api.post(url, userInfo);
       const data = response.data.data.meta;
       const access_token = response.data.data.access_token;
       localStorage.setItem("access_token", access_token);
@@ -37,17 +34,11 @@ export const userLoginFetch = createAsyncThunk(
 export const getProfileFetch = createAsyncThunk(
   "auth/getProfileFetch",
   async (_, thunkAPI) => {
-    const url = `${process.env.REACT_APP_HOST_BACKEND}/auths/login`;
     const access_token = localStorage.getItem("access_token");
     if (access_token) {
       try {
-        const url = `${process.env.REACT_APP_HOST_BACKEND}/auths/account`;
-        const response = await axios.get(url, {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-          },
-          withCredentials: true,
-        });
+        const url = `/auths/account`;
+        const response = await api.get(url);
         const data = response.data.data;
         thunkAPI.dispatch(
           loginUser({
@@ -76,22 +67,11 @@ export const getProfileFetch = createAsyncThunk(
 export const userLogoutFetch = createAsyncThunk(
   "auth/userLogoutFetch",
   async (_, thunkAPI) => {
-    const url = `${process.env.REACT_APP_HOST_BACKEND}/auths/logout`;
-    const access_token = localStorage.getItem("access_token");
+    const url = `/auths/logout`;
     try {
-      const response = await axios.post(
-        url,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-          },
-          withCredentials: true,
-        }
-      );
-      const data = response.data.data;
+      const response = await api.post(url);
       thunkAPI.dispatch(
-        loginUser({
+        logoutUser({
           user: {},
           isAuthenticated: false,
           error: null,
@@ -99,7 +79,7 @@ export const userLogoutFetch = createAsyncThunk(
       );
       localStorage.setItem("access_token", "");
       return response;
-    } catch (error) {
+    } catch (error) { 
       return thunkAPI.rejectWithValue(error.message);
     }
   }

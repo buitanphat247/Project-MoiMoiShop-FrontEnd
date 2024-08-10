@@ -1,6 +1,6 @@
 import { Tabs } from "antd";
-import React, { useEffect } from "react";
-import { NavLink, Outlet, useLocation, useParams } from "react-router-dom";
+import React from "react";
+import { useLocation } from "react-router-dom";
 import ManageUsers from "../layouts/manage/ManageUsers";
 import ManageProducts from "../layouts/manage/ManageProducts";
 import ManageCategories from "../layouts/manage/ManageCategories";

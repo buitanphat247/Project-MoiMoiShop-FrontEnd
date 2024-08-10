@@ -1,9 +1,7 @@
-import React, { useState } from "react";
-import { Nav, NavbarToggle } from "react-bootstrap";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useNavigate, useNavigation } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { Dropdown } from "flowbite-react";
 import { userLoginFetch, userLogoutFetch } from "../slices/authSlice";
 import { toast } from "react-toastify";
 import { Modal, Space } from "antd";
@@ -22,12 +20,6 @@ const list_menu = {
     {
       name: "Product",
       href: "/product",
-      target: "",
-    },
-
-    {
-      name: "News",
-      href: "/",
       target: "",
     },
     {
@@ -89,7 +81,7 @@ const Header = () => {
   const handleAccount = async () => {
     await modal.info({
       title: "Profile",
-      width: "30%",
+      width: "25%",
       content: <CardProfile user={currentUser}></CardProfile>,
       okText: "Submit",
     });
@@ -112,7 +104,6 @@ const Header = () => {
     });
   };
   const handleLogin = async () => {
-    console.log(true);
     await modal.confirm({
       title: "Sign In",
       content: <FormSignIn register={register}></FormSignIn>,

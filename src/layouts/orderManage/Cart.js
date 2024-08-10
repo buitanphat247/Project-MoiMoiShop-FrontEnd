@@ -8,14 +8,13 @@ import {
   EyeOutlined,
   CreditCardOutlined,
 } from "@ant-design/icons";
-import axios from "axios";
 import { useForm } from "react-hook-form";
-import CountUp from "react-countup";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import useModelRemove from "../../hooks/useModelRemove";
 import { formatPrice } from "../../pages/Detail";
 import { useSelector } from "react-redux";
+import api from "../../config/api";
 
 const Cart = () => {
   const [data, setData] = useState({
@@ -39,9 +38,10 @@ const Cart = () => {
     const IdUser = currentUser?._id;
     const url =
       roleUser === "ADMIN"
-        ? `${process.env.REACT_APP_HOST_BACKEND}/orders?current=${currentPage}&limit=${pageSize}&status=CART&populate=productId`
-        : `${process.env.REACT_APP_HOST_BACKEND}/orders?current=${currentPage}&limit=${pageSize}&status=CART&populate=productId&createdBy._id=${IdUser}`;
-    const response = await axios.get(url);
+        ? `/orders?current=${currentPage}&limit=${pageSize}&status=CART&populate=productId`
+        : `/orders?current=${currentPage}&limit=${pageSize}&status=CART&populate=productId&createdBy._id=${IdUser}`;
+
+    const response = await api.get(url);
     setData({ orders: response.data.data.result, isLoading: false });
     setPagination({
       current: response.data.data.meta.current,
@@ -153,13 +153,9 @@ const Cart = () => {
                     withCredentials: true,
                   };
                   try {
-                    await axios.put(
-                      url,
-                      {
-                        quanlity: getValues("newQuantity"),
-                      },
-                      config
-                    );
+                    await api.put(url, {
+                      quanlity: getValues("newQuantity"),
+                    });
                     toast.success("Cập nhật thành công");
                     fetchData(pagination.current, pagination.pageSize); // Refresh data after update
                   } catch (error) {

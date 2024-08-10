@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { setContentEditor } from "../../slices/editorSlice";
 import { useNavigate } from "react-router-dom";
+import api from "../../config/api";
 
 const ManageUsers = () => {
   const {
@@ -42,11 +43,9 @@ const ManageUsers = () => {
 
   const fetchData = async (currentPage = 1, pageSize = 10) => {
     setData((prevData) => ({ ...prevData, isLoading: true }));
-    const url_users = `${process.env.REACT_APP_HOST_BACKEND}/users?current=${currentPage}&limit=${pageSize}`;
+    const url_users = `/users?current=${currentPage}&limit=${pageSize}`;
     try {
-      const response_users = await axios.get(url_users, {
-        withCredentials: true,
-      });
+      const response_users = await api.get(url_users);
       setData({
         users: response_users.data.data.result,
         meta: response_users.data.data.meta,

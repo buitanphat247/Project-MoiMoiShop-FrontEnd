@@ -55,9 +55,9 @@ export const DataFormFieldProduct = [
     label: "Name",
   },
   {
-    name: "quanlity",
+    name: "quantity",
     placeholder: "Enter your quanlity product...",
-    label: "Quanlity",
+    label: "Quantity",
   },
   {
     name: "price",

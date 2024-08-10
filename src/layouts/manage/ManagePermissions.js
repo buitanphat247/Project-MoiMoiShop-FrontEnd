@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Button, Checkbox, Modal, Space, Table } from "antd";
+import { Button, Modal, Space, Table } from "antd";
 import ButtonTemplate from "../../components/ButtonTemplate";
 import useModelControl from "../../hooks/useModelControl";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { format } from "date-fns"; // Import hàm format từ thư viện date-fns
 import slugify from "slugify"; // Import slugify từ thư viện slugify
@@ -10,6 +9,7 @@ import useModelRemove from "../../hooks/useModelRemove";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import FormPermission from "../../components/Form/FormPermission";
 import { useForm } from "react-hook-form";
+import api from "../../config/api";
 
 const ManagePermissions = () => {
   const {
@@ -123,7 +123,7 @@ const ManagePermissions = () => {
   useEffect(() => {
     const fetchPermission = async () => {
       const url = `${process.env.REACT_APP_HOST_BACKEND}/permissions`;
-      const response = await axios.get(url);
+      const response = await api.get(url);
       setDataPermission(response.data.data);
     };
     fetchPermission();
@@ -161,9 +161,7 @@ const ManagePermissions = () => {
 
     const access_token = localStorage.getItem("access_token");
     const url =
-      method === "create"
-        ? `${process.env.REACT_APP_HOST_BACKEND}/permissions`
-        : `${process.env.REACT_APP_HOST_BACKEND}/permissions/${dataEdit._id}`;
+      method === "create" ? `/permissions` : `/permissions/${dataEdit._id}`;
     const config = {
       withCredentials: true,
       headers: {
@@ -173,8 +171,8 @@ const ManagePermissions = () => {
     try {
       const response =
         method === "create"
-          ? await axios.post(url, DataPermissions, config)
-          : await axios.put(url, DataPermissions, config);
+          ? await api.post(url, DataPermissions)
+          : await api.put(url, DataPermissions);
       toast.success(message_success);
     } catch (error) {
       console.log("error: ", error);
