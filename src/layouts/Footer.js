@@ -1,109 +1,94 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div className="border-t-2 border-[rgba(15,22,84,1)] bg-white mt-5">
-      <div className="w-[70%] mx-auto flex justify-around py-5">
+    <div className="bg-gray-200 border-t-2 border-[#393d6e] text-gray-800 mt-5">
+      <div className="w-[90%] lg:w-[70%] mx-auto py-10 flex">
         {/* Column One */}
-        <div className="flex-1 gap-4 flex flex-col items-start flex-grow overflow-clip font-['Roboto']">
-          <p className="text-base font-semibold leading-normal m-0">
-            Column One
-          </p>
-          <div className="w-full flex flex-col items-start font-normal">
-            <div className="py-2 w-full">
-              <p className="text-sm leading-normal m-0">Link One</p>
-            </div>
-            <div className="py-2 w-full">
-              <p className="text-sm leading-normal m-0">Link Two</p>
-            </div>
-            <div className="py-2 w-full">
-              <p className="text-sm leading-normal m-0">Link Three</p>
-            </div>
-            <div className="py-2 w-full">
-              <p className="text-sm leading-normal m-0">Link Four</p>
-            </div>
-            <div className="py-2 w-full">
-              <p className="text-sm leading-normal m-0">Link Five</p>
-            </div>
+        <div className="col-span-1 grid grid-cols-2 flex-1 gap-x-10 ">
+          <div className="flex flex-col space-y-4">
+            <h3 className="text-xl font-semibold">Về MoiMoi Shop</h3>
+            <p className="text-sm leading-relaxed text-justify">
+              MoiMoi Shop là nền tảng thương mại điện tử hiện đại, mang đến trải
+              nghiệm mua sắm trực tuyến dễ dàng và tiện lợi. Với giao diện trực
+              quan, MoiMoi Shop cho phép người dùng duyệt và mua sắm sản phẩm
+              trên mọi thiết bị. Nền tảng cung cấp danh mục sản phẩm phong phú,
+              thanh toán an toàn, và dịch vụ khách hàng tận tâm. MoiMoi Shop cam
+              kết đem lại môi trường mua sắm trực tuyến đáng tin cậy, nơi khách
+              hàng có thể tìm thấy sản phẩm chất lượng và dịch vụ xuất sắc.
+            </p>
           </div>
-        </div>
 
-        {/* Column Two */}
-        <div className="flex-1 gap-4 flex flex-col items-start flex-grow overflow-clip font-['Roboto']">
-          <p className="text-base font-semibold leading-normal m-0">
-            Column Two
-          </p>
-          <div className="w-full flex flex-col items-start font-normal">
-            <div className="py-2 w-full">
-              <p className="text-sm leading-normal m-0">Link Six</p>
-            </div>
-            <div className="py-2 w-full">
-              <p className="text-sm leading-normal m-0">Link Seven</p>
-            </div>
-            <div className="py-2 w-full">
-              <p className="text-sm leading-normal m-0">Link Eight</p>
-            </div>
-            <div className="py-2 w-full">
-              <p className="text-sm leading-normal m-0">Link Nine</p>
-            </div>
-            <div className="py-2 w-full">
-              <p className="text-sm leading-normal m-0">Link Ten</p>
-            </div>
+          {/* Column Two */}
+          <div className="flex flex-col space-y-4">
+            <h3 className="text-xl font-semibold">Điều hướng</h3>
+            <ul className="space-y-2">
+              <li>
+                <NavLink
+                  to="/"
+                  className="text-sm text-gray-400 hover:text-white"
+                >
+                  Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/product"
+                  className="text-sm text-gray-400 hover:text-white"
+                >
+                  Product
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="https://www.facebook.com/btanphat/"
+                  target="_blank"
+                  className="text-sm text-gray-400 hover:text-white"
+                >
+                  Contact
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/about"
+                  className="text-sm text-gray-400 hover:text-white"
+                >
+                  About
+                </NavLink>
+              </li>
+            </ul>
           </div>
         </div>
 
         {/* Column Three */}
-        <div className="flex-1 gap-4 flex flex-col items-start flex-grow overflow-clip font-['Roboto']">
-          <p className="text-base font-semibold leading-normal m-0">
-            Column Three
-          </p>
-          <div className="w-full flex flex-col items-start font-normal">
-            <div className="py-2 w-full">
-              <p className="text-sm leading-normal m-0">Link Eleven</p>
-            </div>
-            <div className="py-2 w-full">
-              <p className="text-sm leading-normal m-0">Link Twelve</p>
-            </div>
-            <div className="py-2 w-full">
-              <p className="text-sm leading-normal m-0">Link Thirteen</p>
-            </div>
-            <div className="py-2 w-full">
-              <p className="text-sm leading-normal m-0">Link Fourteen</p>
-            </div>
-            <div className="py-2 w-full">
-              <p className="text-sm leading-normal m-0">Link Fifteen</p>
-            </div>
-          </div>
+        <div className="flex flex-col space-y-4 w-[50%]">
+          <h3 className="text-xl font-semibold">Bản đồ</h3>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3925.117229186079!2d107.08281447474856!3d10.332502567225646!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175655890579393%3A0x72e1b540463b96e8!2zNTAgVsO1IFRo4buLIFPDoXUsIFBoxrDhu51uZyAyLCBUaMOgbmggcGjhu5EgVsWpbmcgVOG6p3UsIELDoCBS4buLYSAtIFbFqW5nIFTDoHUsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1721346355327!5m2!1svi!2s"
+            style={{ border: "0" }}
+            allowFullScreen=""
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            className="w-[100%] h-full rounded-lg shadow-lg"
+          ></iframe>
         </div>
-
-        {/* Google Maps iframe */}
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3925.117229186079!2d107.08281447474856!3d10.332502567225646!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175655890579393%3A0x72e1b540463b96e8!2zNTAgVsO1IFRo4buLIFPDoXUsIFBoxrDhu51uZyAyLCBUaMOgbmggcGjhu5EgVsWpbmcgVOG6p3UsIELDoCBS4buLYSAtIFbFqW5nIFTDoHUsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1721346355327!5m2!1svi!2s"
-          style={{ border: "0" }}
-          allowFullScreen=""
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          className="mx-auto"
-          width="600"
-          height="250"
-        ></iframe>
       </div>
 
-      {/* Footer */}
-      <div className="w-full bg-[#e5e5e5]">
-        <div className="w-[70%] mx-auto flex justify-between items-center py-3">
-          <p className="text-sm leading-normal">
+      {/* Footer Bottom */}
+      <div className="w-full bg-gray-300 py-4">
+        <div className="w-[90%] lg:w-[70%] mx-auto flex flex-col md:flex-row justify-between items-center">
+          <p className="text-sm text-gray-600 mb-4 md:mb-0">
             © 2018 - 2024 MoiMoi Shop. Nền tảng mua sắm trực tuyến hàng đầu Việt
             Nam.
           </p>
-          <div className="flex gap-3 items-center">
-            <a href="#" className="text-[rgba(15,22,84,1)] hover:underline">
+          <div className="flex gap-5">
+            <a href="#" className="text-sm text-gray-700 hover:text-gray-900">
               Privacy Policy
             </a>
-            <a href="#" className="text-[rgba(15,22,84,1)] hover:underline">
+            <a href="#" className="text-sm text-gray-700 hover:text-gray-900">
               Terms of Service
             </a>
-            {/* Add more links as needed */}
           </div>
         </div>
       </div>
